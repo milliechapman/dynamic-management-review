@@ -1,0 +1,4 @@
+Package: compendium
+Version: 0.1.0
+Depends: rmarkdown, tidyverse, ggplot2, reshape2, gridExtra, plyr
+VignetteBuilder: knitr
