@@ -4,14 +4,16 @@
 
 ## Authors:
 
-- William Oestreich, @woest
+- William Oestreich, @woestreich
 - Melissa Chapman, @milliechapman
 - Larry Crowder
 
-## Description:
+## Abstract
 
 ## Analyses and Data
+All literature used in review was coded into `data/cases.csv` and includes information on domain, year, spatial scale, temporal scale, and regulatory mechanism.
 
+All figures were made with `scripts/generate-figures.Rmd` and can be seen in knitted document `scripts/generate-figures.md` or `scripts/generate-figures-files`
 
 ### Common files
 
