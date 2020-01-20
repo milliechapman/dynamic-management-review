@@ -1,7 +1,6 @@
 ---
 title: "generate_figures"
-author: "Will Oestreich"
-date: "10/16/2019"
+date: "1/19/2019"
 output: github_document
 ---
 
@@ -37,9 +36,9 @@ data$`Spatial scale (km)` <- as.numeric(data$`Spatial scale (km)`)
 
 # Figures
 
-## Figure 1 - timeline of case studies
+## Figure 2 - timeline of case studies
 
-```{r "figure_1", fig.width=4, fig.height=1.6, dpi=400 }
+```{r "figure_2", fig.width=4, fig.height=1.6, dpi=400 }
 yearly_counts <- data.frame(Year = 1985:2019, Marine = numeric(35), Terrestrial = numeric(35))
 for (i in 1985:2019) {
   yearly_counts$Marine[i-1984] <- sum(data$Year == i & data$Domain == "Marine")
@@ -64,9 +63,10 @@ ggplot(data = df, aes(x = Year, y = Count, color = Domain, fill = Domain, width 
 ```
 
 
-## Figure 2 - spatial vs. temporal scale
+## Figure 3 - spatial vs. temporal scale
 
-```{r "figure_2",fig.width=4, fig.height=3.5, dpi=400 }
+```{r "figure_3",fig.width=4, fig.height=3.5, dpi=400 }
+
 rm(Count, Domain, i, Year)
 
 data<- data %>%
@@ -105,7 +105,7 @@ data %>%
 
 ## Figure 3 - Number of species vs. spatial scale, temporal scale
 
-```{r "figure_3" , fig.width=14, fig.height=5, dpi=400}
+```{r "figure_4" , fig.width=14, fig.height=5, dpi=400}
 # get_legend function from the following forum: 
 # http://www.sthda.com/english/wiki/wiki.php?id_contents=7930
 get_legend<-function(myggplot){
@@ -115,7 +115,7 @@ get_legend<-function(myggplot){
   return(legend)
 }
 
-clabs <- c("1","10","Ecosystem-scale")
+clabs <- c("1","10","Habitat-scale")
 p1 <- data %>%
   ggplot(aes(`Temporal scale (days)`, `Number of species`, colour = Domain, fill = Domain)) +
   scale_colour_manual(values = c("Darkblue", "Chartreuse4")) +
@@ -128,7 +128,7 @@ p1 <- data %>%
                      labels = clabs) + 
   annotate("text", label = "(a)", x = 4.3, y = 2, size = 8, colour = "black") +
   theme(panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank(), panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20))
 
 p2 <- data %>%
   select(Domain, `Spatial scale (km)`, `Number of species`, Implementation) %>%
@@ -145,7 +145,7 @@ p2 <- data %>%
                      labels = clabs) + 
   annotate("text", label = "(b)", x = 3.3, y = 2, size = 8, colour = "black") +
   theme(panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank(), panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20))
 
 legend <- get_legend(p1)
 
