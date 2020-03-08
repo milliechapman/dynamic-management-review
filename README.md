@@ -8,7 +8,7 @@
 - Larry Crowder
 
 ## Description
-A comparative analysis of dynamic management (DM) strategies across marine and terrestrial systems, focusing on the scales of ecological forecasts underlying DM approaches in these domains.
+A comparative analysis of dynamic management (DM) strategies across marine and terrestrial systems, focusing on the scales underlying DM approaches in these domains.
 
 ## Analyses and Data
 All cases from the systematic literature review were coded into `data/cases.csv` and include information on domain, year, spatial scale, temporal scale, and regulatory mechanism.
