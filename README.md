@@ -13,7 +13,7 @@ A comparative analysis of dynamic management (DM) strategies across marine and t
 ## Analyses and Data
 All cases from the systematic literature review were coded into `data/cases.csv` and include information on domain, year, spatial scale, temporal scale, and regulatory mechanism.
 
-All figures were made with `scripts/generate-figures.Rmd` and can be seen in knitted document `scripts/generate-figures.md` or `scripts/generate-figures-files`
+All figures were made with `scripts/generate-figures.Rmd` and can be seen in knitted document `scripts/generate-figures.md` or as png files in `scripts/generate-figures-files`
 
 ### Common files
 
