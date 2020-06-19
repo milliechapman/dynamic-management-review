@@ -1,44 +1,35 @@
----
-title: "generate_figures"
-date: "6/18/2020"
-output: github_document
----
+###########################################################################################
+# Generate figures for comparison of marine and terrestrial dynamic management case studies.
+# Loads in .csv of case studies, creates and saves 3 figures for comparison 
+# 
+# William Oestreich
+# Hopkins Marine Station of Stanford University
+# Last updated: Oct 16, 2019
+###########################################################################################
 
-Generate figures for comparison of marine and terrestrial dynamic management case studies.
-
-```{r}
 # Load necessary packages
 library(tidyverse)
 library(plyr)
 library(reshape2)
 library(gridExtra)
 rm(list = ls())
-```
 
-# Data Preparation
-
-Read in "cases" CSV file from literature review
-
-```{r}
-data<- read_csv("../data/cases.csv")  %>% 
+# Read in "cases" CSV file
+data<- read_csv("../") %>% 
   select(Domain, `Temporal scale (days)`, `Number of species`, `Spatial scale (km)`, Implementation, Year)
-```
 
-
-Data cleaning for subsequent analysis
-
-```{r}
+# Data cleaning for subsequent analysis
 data$`Spatial scale (km)`[data$`Spatial scale (km)`=="Not explicitly defined"] <- NA
 data$`Number of species`[data$`Number of species`=="Not explicitly defined"] <- NA
 data$`Spatial scale (km)` <- as.numeric(data$`Spatial scale (km)`)
-```
 
+###########################################################################################
+# Plots
+###########################################################################################
 
-# Figures
+###########################################################################################
+# Figure 3 - timeline of case studies
 
-## Figure 3 - timeline of case studies
-
-```{r "figure_3", fig.width=4, fig.height=1.6, dpi=400 }
 yearly_counts <- data.frame(Year = 1985:2019, Marine = numeric(35), Terrestrial = numeric(35))
 for (i in 1985:2019) {
   yearly_counts$Marine[i-1984] <- sum(data$Year == i & data$Domain == "Marine")
@@ -50,6 +41,7 @@ Count = c(yearly_counts$Marine,yearly_counts$Terrestrial)
 Domain = c(rep("Marine",35),rep("Terrestrial",35))
 df = data.frame(Year,Count,Domain)
 
+tiff("../figures/Fig3.tiff", units="in", width=4, height=1.6, res=400)
 ggplot(data = df, aes(x = Year, y = Count, fill = Domain)) + 
   geom_bar(stat = "identity", width = .8, position = "dodge") +
   scale_x_continuous(breaks = seq(1985, 2015, by = 5)) +
@@ -60,12 +52,10 @@ ggplot(data = df, aes(x = Year, y = Count, fill = Domain)) +
   theme(panel.background = element_rect(fill = "white", colour = "white") ,panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) + 
   theme(legend.position = c(0.15, 0.7))
-```
+dev.off() 
 
-
-## Figure 4 - spatial vs. temporal scale
-
-```{r "figure_4",fig.width=4, fig.height=3.5, dpi=400 }
+########################################################################################### 
+# Figure 4 - spatial vs. temporal scale
 
 rm(Count, Domain, i, Year)
 
@@ -84,6 +74,7 @@ hull <- data %>%
   group_by(Domain) %>% 
   slice(chull(`Temporal scale (days)`, `Spatial scale (km)`))
 
+tiff("../figures/Fig4.tiff", units="in", width=4, height=3.5, res=400)
 data %>%
   ggplot(aes(`Temporal scale (days)`, `Spatial scale (km)`, colour = Domain, fill = Domain, shape = Domain)) +
   scale_colour_manual(values = c("deepskyblue2", "Chartreuse4")) +
@@ -100,13 +91,11 @@ data %>%
   theme(panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank(), panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) + 
   theme(legend.position = c(0.85, 0.9))
-```
+dev.off()
 
+###########################################################################################
+# Figure 5 - Number of species vs. spatial scale, temporal scale
 
-
-## Figure 5 - Number of species vs. spatial scale, temporal scale
-
-```{r "figure_5" , fig.width=14, fig.height=5, dpi=400}
 # get_legend function from the following forum: 
 # http://www.sthda.com/english/wiki/wiki.php?id_contents=7930
 get_legend<-function(myggplot){
@@ -117,6 +106,7 @@ get_legend<-function(myggplot){
 }
 
 clabs <- c("1","10","Habitat-scale")
+tiff("../figures/Fig5.tiff", units="in", width=14, height=5, res=400)
 p1 <- data %>%
   ggplot(aes(`Temporal scale (days)`, `Number of species`, colour = Domain, fill = Domain, shape = Domain)) +
   scale_colour_manual(values = c("deepskyblue2", "Chartreuse4")) +
@@ -155,5 +145,4 @@ legend <- get_legend(p1)
 p1 <- p1 + theme(legend.position = "none")
 
 grid.arrange(p1, p2, legend, ncol=3, widths=c(7, 7, 2))
-```
-
+dev.off()
