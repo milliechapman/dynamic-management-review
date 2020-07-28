@@ -1,5 +1,6 @@
 
-# dynamic-management-review
+# A comparative analysis of dynamic management in marine and terrestrial systems
+Manuscript available here: https://esajournals.onlinelibrary.wiley.com/doi/epdf/10.1002/fee.2243
 
 ## Authors:
 
@@ -19,8 +20,3 @@ All figures were made with `scripts/generate-figures.Rmd` and can be seen in kni
 
 - `README.md` this file, a general overview of the repository in markdown format.  
 
-### Infrastructure for Testing
-
-- `.travis.yml`: A configuration file for automatically running [continuous integration](https://travis-ci.com) checks to verify reproducibility of all `.Rmd` notebooks in the repo.  If all `.Rmd` notebooks can render successfully. 
-- `DESCRIPTION` a metadata file for the repository, based on the R package standard. It's main purpose here is as a place to list any additional R packages/libraries needed for any of the `.Rmd` files to run.
-- `tests/render_rmds.R` an R script that is run to execute the above described tests, rendering all `.Rmd` notebooks. 
